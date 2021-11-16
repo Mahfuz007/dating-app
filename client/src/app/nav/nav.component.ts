@@ -10,14 +10,11 @@ import { AccountService } from "../_services/account.service";
 })
 export class NavComponent implements OnInit {
   loginForm: FormGroup;
-  loggedIn: boolean;
-  currentUser: User;
 
-  constructor(private accountService: AccountService) {}
+  constructor(public accountService: AccountService) {}
 
   ngOnInit() {
     this.initForm();
-    this.getCurrentUser();
   }
 
   initForm() {
@@ -34,29 +31,14 @@ export class NavComponent implements OnInit {
         password: this.loginForm.value.password,
       })
       .subscribe(
-        (res) => {
-          this.loggedIn = true;
-        },
+        (res) => {},
         (err) => {
           console.log("err = ", err);
         }
       );
   }
 
-  getCurrentUser() {
-    this.accountService.currentUser$.subscribe(
-      (user) => {
-        this.loggedIn = !!user;
-        this.currentUser = user;
-      },
-      (err) => {
-        console.log("err = ", err);
-      }
-    );
-  }
-
   logout() {
     this.accountService.logout();
-    this.loggedIn = false;
   }
 }
