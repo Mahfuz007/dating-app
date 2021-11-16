@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { AccountService } from "../_services/account.service";
 
 @Component({
   selector: "app-nav",
@@ -8,8 +9,9 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 })
 export class NavComponent implements OnInit {
   loginForm: FormGroup;
+  loggedIn: boolean;
 
-  constructor() {}
+  constructor(private accountService: AccountService) {}
 
   ngOnInit() {
     this.initForm();
@@ -17,12 +19,29 @@ export class NavComponent implements OnInit {
 
   initForm() {
     this.loginForm = new FormGroup({
-      username: new FormControl("", Validators.required),
-      password: new FormControl("", Validators.required),
+      username: new FormControl(null),
+      password: new FormControl(null),
     });
   }
 
   login() {
-    console.log("login form = ", this.loginForm);
+    this.accountService
+      .login({
+        username: this.loginForm.value.username,
+        password: this.loginForm.value.password,
+      })
+      .subscribe(
+        (res) => {
+          console.log("res = ", res);
+          this.loggedIn = true;
+        },
+        (err) => {
+          console.log("err = ", err);
+        }
+      );
+  }
+
+  logout() {
+    this.loggedIn = false;
   }
 }

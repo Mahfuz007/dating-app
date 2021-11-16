@@ -11,8 +11,12 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Messages</a>
       </li>
+      <li class="nav-item" *ngIf="loggedIn">
+        <a class="nav-link" (click)="logout()">Logout</a>
+      </li>
     </ul>
     <form
+      *ngIf="!loggedIn"
       [formGroup]="loginForm"
       class="form-inline mt-2 mt-md-0"
       (ngSubmit)="login()"
@@ -21,13 +25,13 @@
         class="form-control mr-sm-2"
         type="text"
         placeholder="Username"
-        formControlname="username"
+        formControlName="username"
       />
       <input
         class="form-control mr-sm-2"
         type="password"
         placeholder="Password"
-        formControlname="password"
+        formControlName="password"
       />
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
         Login
