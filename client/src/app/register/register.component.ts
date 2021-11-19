@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AccountService } from "../_services/account.service";
 
 @Component({
   selector: "app-register",
@@ -10,7 +11,10 @@ export class RegisterComponent implements OnInit {
   @Output() cancelRegistrationEvent = new EventEmitter();
   registerForm: FormGroup;
 
-  constructor(private _fb: FormBuilder) {}
+  constructor(
+    private _fb: FormBuilder,
+    private accountService: AccountService
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -24,7 +28,17 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegistration() {
-    console.log("resiter form = ", this.registerForm);
+    this.accountService
+      .register({
+        username: this.registerForm.value.username,
+        password: this.registerForm.value.password,
+      })
+      .subscribe(
+        (res) => {
+          this.onCancel();
+        },
+        (err) => console.log("error: ", err)
+      );
   }
 
   onCancel() {
