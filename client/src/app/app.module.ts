@@ -12,9 +12,8 @@ import { RegisterComponent } from "./register/register.component";
 import { MemberListComponent } from "./members/member-list/member-list.component";
 import { MemberDetailsComponent } from "./members/member-details/member-details.component";
 import { ListsComponent } from "./lists/lists.component";
-import { MatchesComponent } from "./matches/matches.component";
 import { AppRoutingModule } from "./app-routing.module";
-import { MessagesComponent } from './messages/messages.component';
+import { MessagesComponent } from "./messages/messages.component";
 
 @NgModule({
   declarations: [
@@ -25,7 +24,6 @@ import { MessagesComponent } from './messages/messages.component';
     MemberListComponent,
     MemberDetailsComponent,
     ListsComponent,
-    MatchesComponent,
     MessagesComponent,
   ],
   imports: [

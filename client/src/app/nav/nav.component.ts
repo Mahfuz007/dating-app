@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { User } from "../_models/user";
 import { AccountService } from "../_services/account.service";
 
@@ -11,7 +12,7 @@ import { AccountService } from "../_services/account.service";
 export class NavComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(public accountService: AccountService) {}
+  constructor(public accountService: AccountService, private router: Router) {}
 
   ngOnInit() {
     this.initForm();
@@ -31,7 +32,9 @@ export class NavComponent implements OnInit {
         password: this.loginForm.value.password,
       })
       .subscribe(
-        (res) => {},
+        (res) => {
+          this.router.navigateByUrl("/members");
+        },
         (err) => {
           console.log("err = ", err);
         }
@@ -40,5 +43,6 @@ export class NavComponent implements OnInit {
 
   logout() {
     this.accountService.logout();
+    this.router.navigateByUrl("/");
   }
 }
