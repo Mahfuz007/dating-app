@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import { User } from "../_models/user";
 import { AccountService } from "../_services/account.service";
 
@@ -12,7 +13,11 @@ import { AccountService } from "../_services/account.service";
 export class NavComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(public accountService: AccountService, private router: Router) {}
+  constructor(
+    public accountService: AccountService,
+    private router: Router,
+    private toaster: ToastrService
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -34,8 +39,10 @@ export class NavComponent implements OnInit {
       .subscribe(
         (res) => {
           this.router.navigateByUrl("/members");
+          this.toaster.success("Successfully Logged In!");
         },
         (err) => {
+          this.toaster.error(err.error);
           console.log("err = ", err);
         }
       );
@@ -44,5 +51,6 @@ export class NavComponent implements OnInit {
   logout() {
     this.accountService.logout();
     this.router.navigateByUrl("/");
+    this.toaster.warning("logged Out!");
   }
 }

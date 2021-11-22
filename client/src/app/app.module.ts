@@ -14,6 +14,7 @@ import { MemberDetailsComponent } from "./members/member-details/member-details.
 import { ListsComponent } from "./lists/lists.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { MessagesComponent } from "./messages/messages.component";
+import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,9 @@ import { MessagesComponent } from "./messages/messages.component";
     ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     AppRoutingModule,
+    ToastrModule.forRoot({
+      positionClass: "toast-bottom-right",
+    }),
   ],
   providers: [BsDropdownConfig],
   bootstrap: [AppComponent],

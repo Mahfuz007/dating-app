@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
 import { AccountService } from "../_services/account.service";
 
 @Component({
@@ -13,7 +14,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private toaster: ToastrService
   ) {}
 
   ngOnInit() {
@@ -35,7 +37,9 @@ export class RegisterComponent implements OnInit {
       })
       .subscribe(
         (res) => {
+          this.toaster.success("Successfully registered!");
           this.onCancel();
+          this.toaster.success("Successfully Logged In!");
         },
         (err) => console.log("error: ", err)
       );
