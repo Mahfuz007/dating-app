@@ -1,3 +1,4 @@
+using API.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -23,7 +24,7 @@ namespace API.Entities
 
         public int GetAge()
         {
-            return 99;
+            return DateOfBirth.CalculateAge();
         }
     }
 }
