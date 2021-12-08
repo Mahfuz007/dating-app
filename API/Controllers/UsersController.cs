@@ -13,22 +13,22 @@ namespace API.Controllers
     [Authorize]
     public class UsersController : BaseApiController
     {
-        private readonly DataContext _context;
-        public UsersController ( DataContext context)
+        private readonly UserRepository _userRepository;
+        public UsersController (UserRepository userRepository)
         {
-            _context = context;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return Ok(await _userRepository.GetUsersAsync());
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        [HttpGet("{name}")]
+        public async Task<ActionResult<AppUser>> GetUser(string name)
         {
-            return await _context.Users.FindAsync(id);
+            return await _userRepository.GetUserByNameAsync(name);
         }
     }
 }
