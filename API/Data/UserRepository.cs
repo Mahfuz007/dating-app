@@ -22,12 +22,12 @@ namespace API.Data
 
         public async Task<AppUser> GetUserByNameAsync(string name)
         {
-            return await _context.Users.SingleOrDefaultAsync(x => x.UserName == name);
+            return await _context.Users.Include(p => p.Photos).SingleOrDefaultAsync(x => x.UserName == name);
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Include(p => p.Photos).ToListAsync();
         }
 
         public async Task<bool> SaveAllAsync()
