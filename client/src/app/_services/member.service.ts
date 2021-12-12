@@ -4,9 +4,12 @@ import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Member } from "../_models/member";
 
+let user = JSON.parse(localStorage.getItem(`user`));
+user = user ? user.token : "";
+
 const httpOptions = {
   headers: new HttpHeaders({
-    Authorization: "Bearer " + JSON.parse(localStorage.getItem(`user`)).token,
+    Authorization: "Bearer " + user,
   }),
 };
 
