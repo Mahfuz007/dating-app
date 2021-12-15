@@ -1,5 +1,6 @@
 import { Member } from "./../../_models/member";
 import { Component, Input, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-member-card",
@@ -9,7 +10,11 @@ import { Component, Input, OnInit } from "@angular/core";
 export class MemberCardComponent implements OnInit {
   @Input("member") member: Member;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
+
+  goToMemberDetails() {
+    this.router.navigateByUrl("/member/" + this.member.username);
+  }
 }
