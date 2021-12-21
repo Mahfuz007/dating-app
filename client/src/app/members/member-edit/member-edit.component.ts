@@ -4,6 +4,7 @@ import { User } from "./../../_models/user";
 import { Member } from "./../../_models/member";
 import { Component, OnInit } from "@angular/core";
 import { take } from "rxjs/operators";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-member-edit",
@@ -13,15 +14,36 @@ import { take } from "rxjs/operators";
 export class MemberEditComponent implements OnInit {
   member: Member;
   user: User;
+  editForm: FormGroup;
 
   constructor(
     private accountService: AccountService,
-    private memberService: MemberService
+    private memberService: MemberService,
+    private _fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    this.getCurrentUser();
-    this.getMemberDetails();
+    this.initForm([]);
+    this.accountService.currentUser$.pipe(take(1)).subscribe((user) => {
+      this.user = user;
+      this.memberService
+        .getMember(user.username)
+        .pipe(take(1))
+        .subscribe((member) => {
+          this.member = member;
+          this.initForm(this.member);
+        });
+    });
+  }
+
+  initForm(data?) {
+    this.editForm = this._fb.group({
+      description: [data && data.introduction ? data.introduction : ""],
+      lookingFor: [data && data.lookingFor ? data.lookingFor : ""],
+      interests: [data && data.interests ? data.interests : ""],
+      city: [data && data.city ? data.city : ""],
+      country: [data && data.country ? data.country : ""],
+    });
   }
 
   getCurrentUser() {
@@ -30,12 +52,14 @@ export class MemberEditComponent implements OnInit {
       .subscribe((user) => (this.user = user));
   }
 
-  getMemberDetails() {
+  getMemberDetails(userName) {
     this.memberService
-      .getMember(this.user.username)
+      .getMember(userName)
       .pipe(take(1))
       .subscribe((member) => (this.member = member));
   }
 
-  onSaveChanges() {}
+  onSaveChanges() {
+    console.log("form value = ", this.editForm.value);
+  }
 }
