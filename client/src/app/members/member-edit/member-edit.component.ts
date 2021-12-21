@@ -21,6 +21,7 @@ export class MemberEditComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentUser();
+    this.getMemberDetails();
   }
 
   getCurrentUser() {
@@ -28,4 +29,13 @@ export class MemberEditComponent implements OnInit {
       .pipe(take(1))
       .subscribe((user) => (this.user = user));
   }
+
+  getMemberDetails() {
+    this.memberService
+      .getMember(this.user.username)
+      .pipe(take(1))
+      .subscribe((member) => (this.member = member));
+  }
+
+  onSaveChanges() {}
 }
