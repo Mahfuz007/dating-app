@@ -2,7 +2,7 @@ import { AccountService } from "./../../_services/account.service";
 import { MemberService } from "src/app/_services/member.service";
 import { User } from "./../../_models/user";
 import { Member } from "./../../_models/member";
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { take } from "rxjs/operators";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
@@ -15,6 +15,14 @@ export class MemberEditComponent implements OnInit {
   member: Member;
   user: User;
   editForm: FormGroup;
+
+  @HostListener("window:beforeunload", ["$event"]) unloadNotification(
+    $event: any
+  ) {
+    if (this.editForm.dirty) {
+      $event.returnValue = true;
+    }
+  }
 
   constructor(
     private accountService: AccountService,
