@@ -5,6 +5,7 @@ import { Member } from "./../../_models/member";
 import { Component, HostListener, OnInit } from "@angular/core";
 import { take } from "rxjs/operators";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-member-edit",
@@ -27,7 +28,8 @@ export class MemberEditComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private memberService: MemberService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private toast: ToastrService
   ) {}
 
   ngOnInit() {
@@ -46,7 +48,7 @@ export class MemberEditComponent implements OnInit {
 
   initForm(data?) {
     this.editForm = this._fb.group({
-      description: [data && data.introduction ? data.introduction : ""],
+      introduction: [data && data.introduction ? data.introduction : ""],
       lookingFor: [data && data.lookingFor ? data.lookingFor : ""],
       interests: [data && data.interests ? data.interests : ""],
       city: [data && data.city ? data.city : ""],
@@ -69,5 +71,9 @@ export class MemberEditComponent implements OnInit {
 
   onSaveChanges() {
     console.log("form value = ", this.editForm.value);
+    this.memberService.updateMember(this.editForm.value).subscribe(() => {
+      this.toast.success("Profile Updated successfully");
+      this.editForm.reset(this.editForm.value);
+    });
   }
 }
