@@ -1,0 +1,12 @@
+.image-uploader {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.image-uploader button {
+  width: 294px;
+  margin-top: 16px;
+}

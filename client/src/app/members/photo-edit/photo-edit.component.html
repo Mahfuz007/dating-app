@@ -1,1 +1,25 @@
-<p>photo-edit works!</p>
+<!-- Photo display -->
+<section class="photo-container">
+  <div class="row">
+    <div class="col-2" *ngFor="let photo of member?.photos">
+      <img
+        src="{{ photo.url || './assets/user.png' }}"
+        class="img-thumbnail p-1"
+      />
+      <div class="text-center">
+        <button class="btn btn-sm btn-primary">Main</button>
+        <button class="btn btn-sm btn-danger">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row image-uploader">
+    <ngx-image-uploader [options]="options" #imageUploader></ngx-image-uploader>
+
+    <button class="btn btn-success" (click)="imageUploader.uploadImage()">
+      Upload
+    </button>
+  </div>
+</section>
