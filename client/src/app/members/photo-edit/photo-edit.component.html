@@ -16,7 +16,11 @@
   </div>
 
   <div class="row image-uploader">
-    <ngx-image-uploader [options]="options" #imageUploader></ngx-image-uploader>
+    <ngx-image-uploader
+      [options]="options"
+      #imageUploader
+      (upload)="onUpload($event)"
+    ></ngx-image-uploader>
 
     <button class="btn btn-success" (click)="imageUploader.uploadImage()">
       Upload

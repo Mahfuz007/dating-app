@@ -1,7 +1,7 @@
 import { environment } from "./../../../environments/environment";
 import { Component, Input, OnInit } from "@angular/core";
 import { Member } from "src/app/_models/member";
-import { ImageUploaderOptions, FileQueueObject } from "ngx-image-uploader";
+import { ImageUploaderOptions } from "ngx-image-uploader";
 import { AccountService } from "src/app/_services/account.service";
 import { User } from "src/app/_models/user";
 import { take } from "rxjs/operators";
@@ -19,8 +19,8 @@ export class PhotoEditComponent implements OnInit {
 
   constructor(private accountService: AccountService) {}
 
-  onUpload(file: FileQueueObject) {
-    console.log(file.response);
+  onUpload(file: any) {
+    this.member.photos.push(file.response.body);
   }
 
   ngOnInit() {
