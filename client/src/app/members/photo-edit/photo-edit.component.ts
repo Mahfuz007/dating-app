@@ -5,6 +5,8 @@ import { ImageUploaderOptions } from "ngx-image-uploader";
 import { AccountService } from "src/app/_services/account.service";
 import { User } from "src/app/_models/user";
 import { take } from "rxjs/operators";
+import { MemberService } from "src/app/_services/member.service";
+import { Photo } from "src/app/_models/photo";
 
 @Component({
   selector: "app-photo-edit",
@@ -17,7 +19,10 @@ export class PhotoEditComponent implements OnInit {
   baseUrl = environment.apiUrl;
   options: ImageUploaderOptions;
 
-  constructor(private accountService: AccountService) {}
+  constructor(
+    private accountService: AccountService,
+    private memberService: MemberService
+  ) {}
 
   onUpload(file: any) {
     this.member.photos.push(file.response.body);
@@ -40,5 +45,20 @@ export class PhotoEditComponent implements OnInit {
       authToken: "Bearer " + this.user.token,
       autoUpload: false,
     };
+  }
+
+  setMainPhoto(photo: Photo) {
+    this.memberService
+      .setMainPhoto(photo.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.user.photoUrl = photo.url;
+        this.accountService.setCurrentUser(this.user);
+        this.member.photoUrl = photo.url;
+        this.member.photos.forEach((item) => {
+          if (item.isMain == true) item.isMain = false;
+          if (item.id == photo.id) item.isMain = true;
+        });
+      });
   }
 }

@@ -1,14 +1,22 @@
 <!-- Photo display -->
 <section class="photo-container">
   <div class="row">
-    <div class="col-2" *ngFor="let photo of member?.photos">
+    <div class="col-2 mb-2" *ngFor="let photo of member?.photos">
       <img
         src="{{ photo.url || './assets/user.png' }}"
         class="img-thumbnail p-1"
       />
       <div class="text-center">
-        <button class="btn btn-sm btn-primary">Main</button>
-        <button class="btn btn-sm btn-danger">
+        <button
+          [ngClass]="
+            photo.isMain ? 'btn btn-success active' : 'btn btn-outline-success'
+          "
+          [disabled]="photo.isMain"
+          (click)="setMainPhoto(photo)"
+        >
+          Main
+        </button>
+        <button [disabled]="photo.isMain" class="btn btn-sm btn-danger">
           <i class="fa fa-trash"></i>
         </button>
       </div>
