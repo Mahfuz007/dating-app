@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
       ],
       confirmPassword: [
         "",
-        [Validators.required, this.matchPassword["password"]],
+        [Validators.required, this.matchPassword("password")],
       ],
     });
 
@@ -48,9 +48,11 @@ export class RegisterComponent implements OnInit {
 
   matchPassword(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
-      return control.value === control.parent.controls[matchTo].value
+      return !!control.parent &&
+        !!control.parent.value &&
+        control.value === control.parent.controls[matchTo].value
         ? null
-        : { isMatch: true };
+        : { isMatching: true };
     };
   }
 
