@@ -1,0 +1,35 @@
+<div class="form-group" [formGroup]="inputField">
+  <input
+    formControlName="name"
+    type="{{ type }}"
+    class="form-control"
+    placeholder="{{ label }}"
+  />
+
+  <div
+    *ngIf="inputField.controls.name.errors?.required"
+    class="invalid-feedback"
+  >
+    This field is required
+  </div>
+  <div
+    *ngIf="inputField.controls.name.errors?.minlength"
+    class="invalid-feedback"
+  >
+    {{ label }} must be at least
+    {{ inputField.controls.name.errors.minlength["requiredLength"] }} characters
+  </div>
+  <div
+    *ngIf="inputField.controls.name.errors?.maxlength"
+    class="invalid-feedback"
+  >
+    {{ label }} must be at most
+    {{ inputField.controls.name.errors.maxlength["requiredLength"] }} characters
+  </div>
+  <div
+    *ngIf="inputField.controls.name.errors?.isMatching"
+    class="invalid-feedback"
+  >
+    Password do not match
+  </div>
+</div>

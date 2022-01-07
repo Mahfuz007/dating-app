@@ -1,3 +1,4 @@
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
@@ -5,6 +6,7 @@ import { AppRoutingModule } from "../app-routing.module";
 import { ToastrModule } from "ngx-toastr";
 import { TabsModule, TabsetConfig } from "ngx-bootstrap/tabs";
 import { NgxGalleryModule } from "@kolkov/ngx-gallery";
+import { MatInputModule } from "@angular/material";
 
 @NgModule({
   declarations: [],
@@ -17,6 +19,7 @@ import { NgxGalleryModule } from "@kolkov/ngx-gallery";
     }),
     TabsModule.forRoot(),
     NgxGalleryModule,
+    MatFormFieldModule,
   ],
   exports: [
     BsDropdownModule,
@@ -24,6 +27,8 @@ import { NgxGalleryModule } from "@kolkov/ngx-gallery";
     ToastrModule,
     TabsModule,
     NgxGalleryModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [TabsetConfig],
 })

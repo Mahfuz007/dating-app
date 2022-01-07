@@ -22,6 +22,7 @@ import { LoadingInterceptor } from "./_interceptors/loading.interceptor";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { PhotoEditComponent } from "./members/photo-edit/photo-edit.component";
 import { ImageUploaderModule } from "ngx-image-uploader";
+import { InputFieldComponent } from './_forms/input-field/input-field.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ImageUploaderModule } from "ngx-image-uploader";
     MemberCardComponent,
     MemberEditComponent,
     PhotoEditComponent,
+    InputFieldComponent,
   ],
   imports: [
     BrowserModule,
