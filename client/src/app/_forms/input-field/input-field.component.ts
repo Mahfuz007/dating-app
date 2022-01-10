@@ -19,57 +19,43 @@ import {
   selector: "app-input-field",
   templateUrl: "./input-field.component.html",
   styleUrls: ["./input-field.component.css"],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputFieldComponent),
-      multi: true,
-    },
-  ],
 })
 export class InputFieldComponent implements ControlValueAccessor, OnInit {
   @Input() type: string = "text";
   @Input() label: string = "name";
 
-  inputField: FormGroup;
+  errorMessages: any;
+  errors: any = [];
 
-  onChange: any = () => {};
-  onTouched: any = () => {};
-
-  set value(value: any) {
-    this.inputField.setValue(value);
-    this.onChange(value);
-    this.onTouched();
+  constructor(@Self() @Optional() public ngControl: NgControl) {
+    this.ngControl.valueAccessor = this;
   }
-
-  constructor(private fb: FormBuilder) {}
   ngOnInit(): void {
-    this.initForm();
-  }
-
-  initForm(): void {
-    this.inputField = this.fb.group({
-      name: [""],
-    });
-
-    this.inputField.valueChanges.subscribe(() => {
-      console.log("form = ", this.inputField);
+    console.log("dd = ", this.ngControl.control);
+    // this.setErrorMessage();
+    this.ngControl.control.valueChanges.subscribe(() => {
+      console.log("error before  = ", this.ngControl.control.errors);
+      if (this.ngControl.control.errors) {
+        this.errors = Object.entries(this.ngControl.control.errors);
+        console.log("error = ", this.errors);
+      }
     });
   }
 
-  writeValue(value: any): void {
-    if (value) {
-      this.value = value;
-    }
+  setErrorMessage() {
+    this.errorMessages.set("required", () => `This field is required`);
+    this.errorMessages.set(
+      "minlength",
+      () => `${this.label} must be at least three Characters`
+    );
+    this.errorMessages.set(
+      "maxlength",
+      () => `${this.label} must be at most Eight Characters`
+    );
+    this.errorMessages.set("isMatching", () => `Password does not match`);
+  }
 
-    if (value === null) {
-      this.inputField.reset();
-    }
-  }
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
+  writeValue(value: any): void {}
+  registerOnChange(fn: any): void {}
+  registerOnTouched(fn: any): void {}
 }
