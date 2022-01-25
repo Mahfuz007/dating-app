@@ -26,6 +26,11 @@ export class PhotoEditComponent implements OnInit {
 
   onUpload(file: any) {
     this.member.photos.push(file.response.body);
+    if (file.response.body.isMain) {
+      this.user.photoUrl = file.response.body.url;
+      this.member.photoUrl = file.response.body.url;
+      this.accountService.setCurrentUser(this.user);
+    }
   }
 
   ngOnInit() {

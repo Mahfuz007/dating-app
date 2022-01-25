@@ -6,6 +6,7 @@ import {
   ValidatorFn,
   Validators,
 } from "@angular/forms";
+import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { AccountService } from "../_services/account.service";
 
@@ -21,7 +22,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private accountService: AccountService,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -62,19 +64,14 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegistration() {
-    this.accountService
-      .register({
-        username: this.registerForm.value.username,
-        password: this.registerForm.value.password,
-      })
-      .subscribe(
-        (res) => {
-          this.toaster.success("Successfully registered!");
-          this.onCancel();
-          this.toaster.success("Successfully Logged In!");
-        },
-        (err) => console.log("error: ", err)
-      );
+    this.accountService.register(this.registerForm.value).subscribe(
+      (res) => {
+        this.toaster.success("Successfully registered!");
+        this.router.navigateByUrl("/members");
+        this.toaster.success("Successfully Logged In!");
+      },
+      (err) => console.log("error: ", err)
+    );
   }
 
   onCancel() {
