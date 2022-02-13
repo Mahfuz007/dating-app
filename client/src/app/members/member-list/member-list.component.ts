@@ -9,11 +9,19 @@ import { MemberService } from "../../_services/member.service";
   styleUrls: ["./member-list.component.css"],
 })
 export class MemberListComponent implements OnInit {
-  memberList$: Observable<Member[]>;
+  memberList: Member[];
+  page: Number = 1;
+  pageSize: Number = 5;
 
   constructor(private memberService: MemberService) {}
 
   ngOnInit() {
-    this.memberList$ = this.memberService.getMembers();
+    this.loadMembers();
+  }
+
+  loadMembers() {
+    this.memberService.getMembers(this.page, this.pageSize).subscribe(response => {
+      this.memberList = response.result;
+    })
   }
 }
