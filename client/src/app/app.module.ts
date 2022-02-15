@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { BsDropdownConfig } from "ngx-bootstrap/dropdown";
+import { PaginationConfig, PaginationModule } from "ngx-bootstrap/pagination";
 
 import { AppComponent } from "./app.component";
 import { NavComponent } from "./nav/nav.component";
@@ -22,7 +23,7 @@ import { LoadingInterceptor } from "./_interceptors/loading.interceptor";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { PhotoEditComponent } from "./members/photo-edit/photo-edit.component";
 import { ImageUploaderModule } from "ngx-image-uploader";
-import { InputFieldComponent } from './_forms/input-field/input-field.component';
+import { InputFieldComponent } from "./_forms/input-field/input-field.component";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { InputFieldComponent } from './_forms/input-field/input-field.component'
     SharedModule,
     NgxSpinnerModule,
     ImageUploaderModule,
+    PaginationModule.forRoot(),
   ],
   providers: [
     BsDropdownConfig,
@@ -59,6 +61,17 @@ import { InputFieldComponent } from './_forms/input-field/input-field.component'
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
       multi: true,
+    },
+    {
+      provide: PaginationConfig,
+      useValue: {
+        boundaryLinks: true,
+        firstText: "First",
+        previousText: "&lsaquo;",
+        nextText: "&rsaquo;",
+        lastText: "Last",
+        maxSize: 1,
+      },
     },
   ],
   bootstrap: [AppComponent],
