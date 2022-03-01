@@ -2,10 +2,11 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { BsDropdownConfig } from "ngx-bootstrap/dropdown";
 import { PaginationConfig, PaginationModule } from "ngx-bootstrap/pagination";
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { AppComponent } from "./app.component";
 import { NavComponent } from "./nav/nav.component";
@@ -45,10 +46,12 @@ import { InputFieldComponent } from "./_forms/input-field/input-field.component"
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
     SharedModule,
     NgxSpinnerModule,
     ImageUploaderModule,
     PaginationModule.forRoot(),
+    ButtonsModule.forRoot()
   ],
   providers: [
     BsDropdownConfig,

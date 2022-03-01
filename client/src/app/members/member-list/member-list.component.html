@@ -20,6 +20,14 @@
     <button (click)="applyFilter()" class="btn btn-primary ml-1">Apply Filters</button>
     <button (click)="resetFilter()" class="btn btn-primary ml-1">Reset Filters Filters</button>
   </form>
+  <h4>Sort By: </h4>
+  <div class="btn-group">
+    <label (click)="loadMembers()" class="btn btn-primary" [(ngModel)]="userParams.orderBy"
+           btnRadio="lastActive" tabindex="0" role="button">Last Active</label>
+    <label (click)="loadMembers()" class="btn btn-primary" [(ngModel)]="userParams.orderBy"
+           btnRadio="created" tabindex="0" role="button">Newest member</label>
+  </div>
+
 </div>
 <div class="row">
   <div class="col-2" *ngFor="let name of memberList">

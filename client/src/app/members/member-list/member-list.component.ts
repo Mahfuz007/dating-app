@@ -19,6 +19,7 @@ export class MemberListComponent implements OnInit {
   paginationInfo: Pagination;
   userParams: UserParams;
   user: User;
+  radioModel = "lastActive";
 
   genderList = [{value: 'male' , display: "Males"}, { value: 'female' , display: "Females"}];
 
