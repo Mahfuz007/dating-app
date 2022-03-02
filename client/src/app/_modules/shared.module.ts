@@ -7,6 +7,7 @@ import { ToastrModule } from "ngx-toastr";
 import { TabsModule, TabsetConfig } from "ngx-bootstrap/tabs";
 import { NgxGalleryModule } from "@kolkov/ngx-gallery";
 import { MatInputModule } from "@angular/material";
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   declarations: [],
@@ -20,8 +21,10 @@ import { MatInputModule } from "@angular/material";
     TabsModule.forRoot(),
     NgxGalleryModule,
     MatFormFieldModule,
+    TimeagoModule.forRoot()
   ],
   exports: [
+    CommonModule,
     BsDropdownModule,
     AppRoutingModule,
     ToastrModule,
@@ -29,6 +32,7 @@ import { MatInputModule } from "@angular/material";
     NgxGalleryModule,
     MatFormFieldModule,
     MatInputModule,
+    TimeagoModule
   ],
   providers: [TabsetConfig],
 })
