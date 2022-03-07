@@ -25,14 +25,8 @@ export class MemberListComponent implements OnInit {
 
   filtersForm: FormGroup;
 
-  constructor(private memberService: MemberService,
-     private accountService: AccountService,
-     private fb: FormBuilder
-     ) {
-    this.accountService.currentUser$.pipe(take(1)).subscribe((user => {
-      this.user = user;
-      this.userParams = new UserParams(user);
-    }))
+  constructor(private memberService: MemberService, private fb: FormBuilder) {
+    this.userParams = this.memberService.getUserParams();
   }
 
   ngOnInit() {
@@ -42,13 +36,14 @@ export class MemberListComponent implements OnInit {
 
   initForm() {
     this.filtersForm = this.fb.group({
-      AgeFrom: [18],
-      AgeTo: [99],
-      Gender: [this.user.gender == 'male'? 'female' : 'male']
+      AgeFrom: [this.userParams.minAge],
+      AgeTo: [this.userParams.maxAge],
+      Gender: [this.userParams.gender]
     })
   }
 
   loadMembers() {
+    this.userParams = this.memberService.getUserParams();
     this.memberService.getMembers(this.userParams).subscribe(response => {
       this.memberList = response.result;
       this.paginationInfo = response.pagination;
@@ -57,11 +52,13 @@ export class MemberListComponent implements OnInit {
 
   onPageChange($event) {
     this.userParams.pageNumber = $event.page;
+    this.memberService.setUserParams(this.userParams)
     this.loadMembers();
   }
 
   applyFilter() {
-    this.setParamsValue()
+    this.setParamsValue();
+    this.memberService.setUserParams(this.userParams);
     this.loadMembers();
   }
 
@@ -72,11 +69,7 @@ export class MemberListComponent implements OnInit {
   }
 
   resetFilter() {
-    this.filtersForm.get('AgeFrom').setValue(18);
-    this.filtersForm.get('AgeTo').setValue(99);
-    this.filtersForm.get('Gender').setValue(this.user.gender == 'male'? 'female' : 'male');
-
-    this.setParamsValue();
+    this.memberService.resetUserParams();
     this.loadMembers();
   }
  }
